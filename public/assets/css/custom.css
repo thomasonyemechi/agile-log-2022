@@ -1,0 +1,40 @@
+.text-primary-a {
+    color: #036 !important;
+}
+
+.fe {
+    color: #036 !important;
+}
+
+
+.fe-b {
+    color: #ffff !important;
+}
+
+.a-b {
+    background-color: #036 !important;
+}
+
+.btn-primary-a {
+    background-color: #036 !important;
+    color: #ffff;
+}
+
+.btn-hero {
+    font-weight: 500 !important;
+    padding: 0.65rem 0.30rem !important;
+}
+
+
+.contact{
+    margin-top:  50px !important;
+}
+
+.text-center{
+    margin-top:5px !important;
+}
+
+.mt-c{
+    padding:5px; 
+    /* color: #036; */
+}
