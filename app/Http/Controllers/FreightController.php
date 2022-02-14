@@ -12,6 +12,38 @@ use Illuminate\Support\Facades\Validator;
 class FreightController extends Controller
 {
 
+    function adminUpdateFreight(Request $request)
+    {
+        Validator::make($request->all(), [
+            'action' => 'required'
+        ]);
+
+        foreach(json_decode($request->data) as $f_id) {
+            $fre = Freight::find($f_id);
+            $msg = [
+                'message' => $request->message,
+                'time' => time(),
+            ];
+
+            if($fre->message == ''){
+                $all_new[] = $msg;
+            }else {
+                $former_message = json_decode($fre->message, true);
+                $former_message[] = $msg;
+                $all_new = $former_message;
+            }
+
+            $fre->update([
+                'message' => json_encode($all_new),
+                'status' => $request->action,
+            ]);
+
+
+        }
+
+        return back()->with('success', 'Freights updated sucessfully');
+    }
+
 
     function assignFreightToDriver(Request $request)
     {
@@ -82,6 +114,11 @@ class FreightController extends Controller
 
         session()->put('org_id', $request->org_id);
 
+
+        $driver_id = $request->driver_id ?? 0;
+        $status = ($driver_id > 0) ? 3 : 0 ;
+        $ofd_time = ($driver_id > 0) ? time() : 0 ;
+
         Freight::create([
             'org_id' => $request->org_id,
             'pro' => $request->pro,
@@ -94,6 +131,9 @@ class FreightController extends Controller
             'apt' =>  $request->apt ?? 0,
             'user_id' => auth()->user()->id,
             'ctime' => time(),
+            'status' => $status,
+            'driver_id' => $driver_id,
+            'ofd_time' => $ofd_time,
         ]);
         return back()->with('success', 'Freight added successfully');
     }

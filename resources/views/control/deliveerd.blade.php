@@ -6,8 +6,6 @@
 
     <link href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 
-
-
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">

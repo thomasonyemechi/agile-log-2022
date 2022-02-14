@@ -59,9 +59,9 @@
                             </div>
                         </div>
                         <h2 class="fw-bold mb-1">
-                            {{\App\Models\Freight::sum('pallet')}}
+                            {{\App\Models\Freight::count()}}
                         </h2>
-                        <span class="text-success fw-semi-bold">0</span>
+                        <span class="text-success fw-semi-bold">{{\App\Models\Freight::where('status', '>', 0)->count()}}</span>
                         <span class="ms-1 fw-medium">Freights Approved</span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                         <h2 class="fw-bold mb-1">
                             {{\App\Models\User::where('role', 1)->count()}}
                         </h2>
-                        <span class="text-success fw-semi-bold">0</span>
+                        <span class="text-success fw-semi-bold">{{\App\Models\Freight::where('status', 5)->count()}}</span>
                         <span class="ms-1 fw-medium">Deliveries</span>
                     </div>
                 </div>
@@ -102,9 +102,9 @@
                             </div>
                         </div>
                         <h2 class="fw-bold mb-1">
-                            0
+                            {{\App\Models\Freight::where('status', 0)->count()}}
                         </h2>
-                        <span class="text-success fw-semi-bold">0 LBS</span>
+                        <span class="text-success fw-semi-bold">{{number_format(\App\Models\Freight::sum('weight'))}} LBS</span>
                         <span class="ms-1 fw-medium">Weight In</span>
                     </div>
                 </div>

@@ -97,6 +97,7 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     Route::post('/eidtFreight', [\App\Http\Controllers\FreightController::class, 'eidtFreight'])->name('eidtFreight');
     Route::post('/createFreight', [\App\Http\Controllers\FreightController::class, 'createFreight'])->name('createFreight');
     Route::post('/assign_freight', [\App\Http\Controllers\FreightController::class, 'assignFreightToDriver'])->name('assign.freight');
+    Route::post('/update_freight', [\App\Http\Controllers\FreightController::class, 'adminUpdateFreight'])->name('assign.freight.update');
 
 
     Route::get('/freight/flagged', function () {
@@ -107,6 +108,14 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     Route::get('/freight/delivered', function () {
         return view('control.deliveerd');
     });
+
+
+    Route::get('d/freight/{driver_id}/{date?}', function ($driver_id, $date) {
+        $driver = User::find($driver_id);
+        return view('control.print_freight', compact('driver', 'date'));
+    });
+
+
 
 
 

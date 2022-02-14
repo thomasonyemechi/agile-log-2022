@@ -88,6 +88,7 @@
                                     <td colspan="2">
                                         <div class="d-flex justify-content-end">
                                             <button class="btn btn-sm btn-info float-right assign">Assign To Driver</button>
+                                            <button class="btn ms-2 btn-sm btn-primary float-right update">Update Status</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -99,8 +100,12 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+
+
 
 
     <div class="modal fade" id="editOrganization" tabindex="-1" role="dialog" aria-labelledby="editOrganization"
@@ -185,6 +190,15 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="{{ route('control.createFreight') }}" class="row">@csrf
+                        <div class="mb-2 col-md-12">
+                            <label class="form-label">Driver <span class="text-danger">*</span></label>
+                            <select name="driver_id" class="form-control">
+                                <option selected disabled>...Select Driver...</option>
+                                @foreach (\App\Models\User::where(['role' => 1])->get(['id',  'name']) as $dri)
+                                    <option value="{{$dri->id}}">{{$dri->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mb-2 col-md-3">
                             <label class="form-label">PRO <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" name="pro" value="{{ old('pro') }}"
@@ -308,6 +322,47 @@
         </div>
     </div>
 
+
+
+    <div class="modal fade" id="updateFreight" tabindex="-1" role="dialog" aria-labelledby="addFreight" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Freight</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x-circle"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('control.assign.freight.update') }}" class="row">@csrf
+                        <div class="mb-2 col-12">
+                            <label>Select Action</label>
+                            <select name="action" class="form-control">
+                                <option selected disabled>...Select option...</option>
+                                <option value="4">Off for delivery</option>
+                                <option value="5">Sucessfully delivered</option>
+                                <option value="6">Refused/Flagged item</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 col-md-12">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" name="message" rows="3" placeholder="Enter a message"></textarea>
+                                <input type="hidden" name="data">
+                        </div>
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary ">Update</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
     @include('control.assign_modal')
 
 
@@ -358,6 +413,28 @@
                 $(modal).find('.modal-title').html(`Assign ${i} Freight To Driver`);
                 $(modal).find('input[name="data"]').val(`${JSON.stringify(data)}`);
             })
+
+
+            $('body').on('click', '.update', function() {
+                trs = $('.single'); data = []; i = 0;
+                trs.map(tr => {
+                    check = trs[tr].children[0].children[1].value;
+                    if(check == 1) {
+                        f_id = trs[tr].children[0].children[0].value;
+                        data.push(parseInt(f_id))
+                        i++;
+                    }
+                });
+                if(i == 0) { alert('Pls select freight to update'); return; }
+                modal = $('#updateFreight');
+                modal.modal('show');
+
+                $(modal).find('.modal-title').html(`Update ${i} Freight Status`);
+                $(modal).find('input[name="data"]').val(`${JSON.stringify(data)}`);
+                console.log(data);
+            })
+
+
         })
     </script>
 
