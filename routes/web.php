@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Organization;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -114,6 +115,15 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
         $driver = User::find($driver_id);
         return view('control.print_freight', compact('driver', 'date'));
     });
+
+
+    Route::get('o/freight/{org_id}/{date?}', function ($org_id, $date) {
+        $org = Organization::find($org_id);
+        return view('control.print_invoice', compact('org', 'date'));
+    });
+
+
+
 
 
 

@@ -156,12 +156,13 @@ Manage Freight
                                             <input type="hidden" id="{{$fre->id}}inp" value=0>
                                             {{$loop->iteration}}
                                         </td>
-                                        <td class="align-middle">{{ $fre->org->name }} </td>
+                                        <td class="align-middle" style="font-weight: bolder">
+                                             {!!'<a class="text-bold" href="/control/o/freight/'.$fre->org->id.'/'.date('Y-m-j').' ">'.$fre->org->name.' </a>' !!}  </td>
                                         <td class="align-middle">{{ ($fre->ofd_time > 0) ? date('j M, Y', $fre->ofd_time): '' }} </td>
-                                        <td class="align-middle">{!! ($fre->driver) ? '<a class="text-bold" href="/control/d/freight/'.$fre->driver->id.'/'.date('Y-m-j').' ">'.$fre->driver->name.' </a>' : 'No Driver assigned' !!} </td>
+                                        <td class="align-middle" style="font-weight: bolder">{!! ($fre->driver) ? '<a class="text-bold" href="/control/d/freight/'.$fre->driver->id.'/'.date('Y-m-j').' ">'.$fre->driver->name.' </a>' : 'No Driver assigned' !!} </td>
 
                                         <td class="align-middle">
-                                            <a href="#" class="freightInfo align-middle" style="font-weight: bolder"
+                                            <a href="#" class="freightInfo align-middle"
                                             title="click for more">{{$fre->pro }} {!! deliveryProStatus($fre->status) !!} </a>
                                         </td>
                                         <td class="align-middle"> {{$fre->consignee}} </td>
