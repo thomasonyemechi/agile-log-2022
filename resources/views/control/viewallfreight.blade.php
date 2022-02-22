@@ -138,7 +138,7 @@ Manage Freight
                                     <th scope="col" class="border-0">#</th>
                                     <th scope="col" class="border-0">Org</th>
                                     <th scope="col" class="border-0">OFD Date</th>
-                                    <th scope="col" class="border-0">Driver</th>
+                                    <th scope="col" class="border-1">Driver</th>
                                     <th scope="col" class="border-0">Pro/status</th>
                                     <th scope="col" class="border-0">Consignee</th>
                                     <th scope="col" class="border-0">Destination</th>
@@ -158,8 +158,9 @@ Manage Freight
                                         <td class="align-middle" style="font-weight: bolder">
                                              {!!'<a class="text-bold" href="/control/o/freight/'.$fre->org->id.'/'.date('Y-m-j').' ">'.$fre->org->name.' </a>' !!}  </td>
                                         <td class="align-middle">{{ ($fre->ofd_time > 0) ? date('j M, Y', $fre->ofd_time): '' }} </td>
-                                        <td class="align-middle" style="font-weight: bolder">{!! ($fre->driver) ? '<a class="text-bold" href="/control/d/freight/'.$fre->driver->id.'/'.date('Y-m-j').' ">'.$fre->driver->name.' </a>' : 'No Driver assigned' !!} </td>
-
+                                        <td class="align-middle" style="font-weight: bolder">
+                                            {!! ($fre->driver) ? '<a class="text-bold" href="/control/d/freight/'.$fre->driver->id.'/'.date('Y-m-j').' ">'.$fre->driver->name.' </a>' : 'No Driver assigned' !!}
+                                        </td>
                                         <td class="align-middle">
                                             <a href="#" class="freightInfo align-middle"
                                             title="click for more">{{$fre->pro }} {!! deliveryProStatus($fre->status) !!} </a>
@@ -177,12 +178,9 @@ Manage Freight
                                     <td><b>With Selected:</b></td>
                                     <td></td>
                                     <td>
-                                        <div class="d-flex justify-content-end">
-                                            <button class="btn btn-sm btn-info float-right assign">Assign To Driver</button>
-                                            <button class="btn ms-2 btn-sm btn-primary float-right update">Update Status</button>
-                                        </div>
+                                        <button class="btn btn-sm btn-info float-right assign">Assign</button>
                                     </td>
-                                    <td></td>
+                                    <td><button class="btn ms-2 btn-sm btn-primary float-right update">Update</button></td>
 
                                     <td></td>
 
