@@ -43,7 +43,7 @@
                             <x-jet-validation-errors />
                             <div class="mb-2 col-12">
                                 <label  class="form-label">Full Name</label>
-                                <input type="hidden" name="role" value="1">
+                                <input type="hidden" name="role_id" value="1">
                                 <input type="text" class="form-control" name="name"  value="{{ old('name') }}" placeholder="Enter full name" required>
                             </div>
                             <div class="col-6">
