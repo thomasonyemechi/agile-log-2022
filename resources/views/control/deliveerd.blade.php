@@ -40,7 +40,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="table-responsive">
-                        <table id="dataTableBasic2" class="table mb-0 text-nowrap">
+                        <table id="dtt" class="table mb-0 text-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
@@ -50,7 +50,6 @@
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
                                     <th scope="col" class="border-0">Split</th>
-                                    <th scope="col" class="border-0"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,7 +80,11 @@
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <th colspan="5"></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                     <th >{{number_format($t_pal)}} | {{number_format($t_wgt)}} LBS</th>
                                     <th>{{number_format($t_spil)}}</th>
                                 </tr>

@@ -45,7 +45,7 @@
                         <button data-bs-toggle="modal" data-bs-target="#addFreight" class="btn btn-primary btn-xs"> Add Freight</button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table mb-0 text-nowrap">
+                        <table id="dtt" class="table mb-0 text-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
@@ -57,7 +57,6 @@
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
                                     <th scope="col" class="border-0">Split</th>
-                                    <th scope="col" class="border-0"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,13 +83,25 @@
                                 @endforeach
 
                                 <tr>
-                                    <td colspan="2"><b>With Selected:</b></td>
-                                    <td colspan="2">
+                                    <td></td>
+                                    <td><b>With Selected:</b></td>
+                                    <td></td>
+                                    <td>
                                         <div class="d-flex justify-content-end">
                                             <button class="btn btn-sm btn-info float-right assign">Assign To Driver</button>
                                             <button class="btn ms-2 btn-sm btn-primary float-right update">Update Status</button>
                                         </div>
                                     </td>
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+ 
                                 </tr>
                             </tbody>
                         </table>

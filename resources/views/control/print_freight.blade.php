@@ -45,7 +45,7 @@ $freights = \App\Models\Freight::where(['driver_id' => $driver->id,])->whereBetw
             <div class="col-12">
                 <div class="card">
                     <div class="table-">
-                        <table id="dataTableBasic2" class="table mb-0 text-nowrap">
+                        <table id="dtt" class="table mb-0 text-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
@@ -87,13 +87,14 @@ $freights = \App\Models\Freight::where(['driver_id' => $driver->id,])->whereBetw
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <th colspan="5"></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                     <td>{{number_format($t_pal)}} </td>
                                     <th >{{number_format($t_wgt)}}</th>
                                     <th>{{number_format($t_spil)}}</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="12"><button class="btn btn-primary" onclick="print()">Print</button></td>
                                 </tr>
                             </tbody>
                         </table>

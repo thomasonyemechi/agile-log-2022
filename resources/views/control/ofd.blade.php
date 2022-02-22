@@ -47,7 +47,7 @@ $freights = \App\Models\Freight::whereBetween('ofd_time', [$start, $start+(86400
             <div class="col-12">
                 <div class="card">
                     <div class="table-">
-                        <table id="dataTableBasic2" class="table mb-0 text-nowrap">
+                        <table id="dtt" class="table mb-0 text-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
@@ -88,16 +88,21 @@ $freights = \App\Models\Freight::whereBetween('ofd_time', [$start, $start+(86400
                                         <td class="align-middle">{{ $fre->byd_split }}</td>
                                     </tr>
                                 @endforeach
+
                                 <tr>
-                                    <th colspan="5"></th>
-                                    <td>{{number_format($t_pal)}} </td>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>{{number_format($t_pal)}} </th>
                                     <th >{{number_format($t_wgt)}}</th>
                                     <th>{{number_format($t_spil)}}</th>
                                 </tr>
-                                <tr>
-                                    <td colspan="12"><button class="btn btn-primary" onclick="print()">Print</button></td>
-                                </tr>
                             </tbody>
+                        </table>
+                        <table class="table">
+
                         </table>
                     </div>
 
@@ -105,8 +110,6 @@ $freights = \App\Models\Freight::whereBetween('ofd_time', [$start, $start+(86400
             </div>
         </div>
     </div>
-
-
 
 
 

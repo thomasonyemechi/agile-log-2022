@@ -132,7 +132,7 @@ Manage Freight
 
                 <div class="card">
                     <div class="table-responsive">
-                        <table id="mytb" class="table mb-0 text-nowrap">
+                        <table id="dtt" class="table mb-0 text-nowrap">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
@@ -145,7 +145,6 @@ Manage Freight
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
                                     <th scope="col" class="border-0">Split</th>
-                                    <th scope="col" class="border-0"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,14 +173,30 @@ Manage Freight
                                 @endforeach
 
                                 <tr>
-                                    <td colspan="2"><b>With Selected:</b></td>
-                                    <td colspan="2">
+                                    <td></td>
+                                    <td><b>With Selected:</b></td>
+                                    <td></td>
+                                    <td>
                                         <div class="d-flex justify-content-end">
                                             <button class="btn btn-sm btn-info float-right assign">Assign To Driver</button>
                                             <button class="btn ms-2 btn-sm btn-primary float-right update">Update Status</button>
                                         </div>
                                     </td>
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+
+
                                 </tr>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -280,16 +295,8 @@ Manage Freight
 
 
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
 
     <script>
-        // $('#mytb').DataTable( {
-        //     paging: false,
-        // } );
-
         $(function() {
             $('body').on('click', '.ooooo', function() {
                 val = $(this).data('id');
