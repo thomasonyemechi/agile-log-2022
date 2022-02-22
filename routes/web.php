@@ -111,6 +111,14 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     });
 
 
+    Route::get('/freight/ofd', function () {
+        return view('control.ofd');
+    });
+
+
+
+
+
     Route::get('d/freight/{driver_id}/{date?}', function ($driver_id, $date) {
         $driver = User::find($driver_id);
         return view('control.print_freight', compact('driver', 'date'));

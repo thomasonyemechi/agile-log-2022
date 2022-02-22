@@ -57,6 +57,13 @@
 
 
                 <li class="nav-item">
+                    <a class="nav-link " href="/control/freight/ofd">
+                        <i class=" nav-icon fe fe-database me-2"></i> Out For delivery Freight
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
                     <a class="nav-link " href="/control/freight/flagged">
                         <i class=" nav-icon fe fe-database me-2"></i> Refused/Flagged Freight
                     </a>
