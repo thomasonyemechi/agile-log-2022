@@ -8,9 +8,11 @@
 
 
 @php
-$start = strtotime($date);
+$first_second = strtotime(date('Y-m-01'));
 
-$freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('ofd_time', [$start, $start+(86400-1)])->orderBy('id', 'desc')->paginate(100);
+$last_second  = strtotime(date('Y-m-t'))+ 86400-1 ;
+
+$freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('ofd_time', [$first_second, $last_second])->orderBy('id', 'desc')->paginate(100);
 @endphp
 
 
@@ -22,12 +24,12 @@ $freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('o
                 <div class="border-bottom pb-4 mb-4 d-flex justify-content-between align-items-center">
                     <div class="mb-2 mb-lg-0">
                         <h1 class="mb-1 h2 fw-bold">
-                             {{$org->name}} ({{date('j M, Y', $start)}})
+                             {{$org->name}} ({{date('M Y', $first_second)}})
                         </h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="/control/">Invoice</a>
+                                    <a href="/control/"> {{$last_second}} Invoice</a>
                                 </li>
 
                                 <li class="breadcrumb-item active" aria-current="page">
