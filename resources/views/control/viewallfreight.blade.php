@@ -127,7 +127,7 @@ Manage Freight
 
 
                 @php
-                    $freights = \App\Models\Freight::orderBy('id', 'desc')->paginate(100);
+                    $freights = \App\Models\Freight::with(['driver:id,name,email,phone', 'org:id,name,email,phone'])->orderBy('id', 'desc')->paginate(100);
                 @endphp
 
                 <div class="card">
@@ -145,6 +145,7 @@ Manage Freight
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
                                     <th scope="col" class="border-0">Split</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -173,6 +174,7 @@ Manage Freight
                                         <td class="align-middle">{{ $fre->spec_ins }}</td>
                                         <td class="align-middle">{{ $fre->pallet }} | {{ $fre->weight }} LBS</td>
                                         <td class="align-middle">{{ $fre->byd_split }}</td>
+                                        <td class="align-middle"><button class="btn btn-sm btn-info view_more" data-data='{{json_encode($fre)}}'>More</button></td>
                                     </tr>
                                 @endforeach
 
@@ -192,6 +194,7 @@ Manage Freight
 
                                     <td></td>
 
+                                    <td></td>
                                     <td></td>
                                     <td></td>
 
@@ -301,7 +304,7 @@ Manage Freight
         <div class="modal-dialog modal-dialog-centered moda" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Arrpoved Selected Freight</h5>
+                    <h5 class="modal-title">Approved Selected Freight</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x-circle"></i>
                     </button>
@@ -322,6 +325,25 @@ Manage Freight
     </div>
 
 
+    <div class="modal fade" id="freight_details" tabindex="-1" role="dialog" aria-labelledby="addFreight" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Freight Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x-circle"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 
     <script>
@@ -333,6 +355,8 @@ Manage Freight
                 inp.val(new_val);
 
             })
+
+
 
 
             $('body').on('click', '.assign', function() {
@@ -372,6 +396,21 @@ Manage Freight
                 $(modal).find('input[name="data"]').val(`${JSON.stringify(data)}`);
                 console.log(data);
             })
+
+
+            function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+
+    return `${day} ${monthNames[month - 1]}, ${year}`;
+}
+
 
             $('.approve_freight').on('click', function () {
                 trs = $('.single'); data = []; i = 0;
@@ -439,6 +478,124 @@ Manage Freight
 
 
             // })
+
+            $('body').on('click', '.view_more', function() {
+                data = $(this).data('data');
+                console.log(data);
+                modal = $('#freight_details');
+                modal.modal('show');
+
+                body = modal.find('.modal-body');
+                body.html(``);
+
+                modal.find('.modal-title').html(`Freight Details (${data.pro})`);
+
+                a = data.approved;
+                a_info = JSON.parse(data.approved_info);
+                console.log(a_info);
+
+                a_body = (a == 1) ? `
+                    <div class="d-flex justify-content-between">
+                        <span>Approved_By: <b>User</b></span>|
+                        <span>Date: <b>${formatDate(a_info.time)}</b></span>
+                    </div>
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Message: <b>${a_info.message}</b></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <img src="{{ asset('assets/img/freight/${a_info.image}') }}" class="image-fluid" style="width: 100%" alt="">
+                    </div>
+                ` : `<div class="alert alert-danger">Freight Has not been approved</div>`;
+
+
+                driver_body = (data.driver_id > 0) ? `
+                     <div class="d-flex justify-content-between">
+                        <span>Name: <b>${data.driver.name}</b></span>|
+                        <span>Email: <b>${data.driver.email}</b></span>|
+                        <span>Phone: <b>${data.driver.phone}</b></span>
+                    </div>
+                `: `<div class="alert alert-danger">Freight has not been assigned to a driver </div>`
+                body.append(`
+                    <div class="card mb-2 ">
+                        <div class="card-header p-1 bg-primary">
+                            <h5 class="card-title mb-0 text-white">Freight Info</h5>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="d-flex justify-content-between">
+                                <span>Pro: <b>${data.pro}</b></span>|
+                                <span>Pallet: <b>${data.pallet}</b></span>|
+                                <span>Weight: <b>${data.weight} LBS</b></span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span>Split: <b>$ ${data.byd_split}</b></span>|
+                                <span>Spec INS: <b>${data.spec_ins}</b></span>|
+                                <span>Weight: <b>${data.weight} LBS</b></span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span>Cosignee: <b>${data.consignee}</b></span>|
+                                <span>Destination: <b>${data.destination}</b></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2">
+                        <div class="card-header p-1 bg-info">
+                            <h5 class="card-title mb-0">Driver Info</h5>
+                        </div>
+                        <div class="card-body p-1">
+                            ${driver_body}
+                        </div>
+                    </div>
+                    <div class="card mb-2">
+                        <div class="card-header p-1 bg-info">
+                            <h5 class="card-title mb-0">Company Info</h5>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="d-flex justify-content-between">
+                                <span>Name: <b>${data.org.name}</b></span>|
+                                <span>Phone: <b>${data.org.phone}</b></span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span>Email: <b>${data.org.email}</b></span>|
+                                <span>Address: <b>${data.org.email}</b></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card mb-2">
+                        <div class="card-header p-1">
+                            <h5 class="card-title mb-0">Company Info</h5>
+                        </div>
+                        <div class="card-body p-1">
+                            <div class="d-flex justify-content-between">
+                                <span>Name: <b>Road Runner</b></span>|
+                                <span>Phone: <b>+1 (192) 733 3237 323</b></span>
+                            </div>
+                            <hr>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Email: <b>email@company.com</b></span>|
+                                <span>Address: <b>456 MERRICK RD CORP SPEC LYNBROOK NY 11563</b></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card mb-2">
+                        <div class="card-header p-1 bg-success">
+                            <h5 class="card-title mb-0">Approval Info</h5>
+                        </div>
+                        <div class="card-body p-1">
+                            ${a_body}
+                        </div>
+                    </div>
+                `)
+            })
 
         })
     </script>

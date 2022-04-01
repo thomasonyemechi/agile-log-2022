@@ -154,6 +154,7 @@ class FreightController extends Controller
                 $img_name = $freight->pro.'_'.time().rand(1111111,3333333).'.'.$ext;
                 move_uploaded_file($file['tmp_name'], 'assets/img/freight/'.$img_name);
 
+
                 $time = ($freight->status == 3 || $freight->status == 4) ? time() : $freight->ofd_time;
                 $info = [
                     'image' => $img_name,
@@ -161,6 +162,8 @@ class FreightController extends Controller
                     'time' => time(),
                     'approved_by' => auth()->user()->id
                 ];
+
+
                 $freight->update([
                     'approved' => 1,
                     'approved_info' => json_encode($info),
