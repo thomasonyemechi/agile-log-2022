@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Delivery;
 use App\Models\Freight;
-use App\Models\FreightApproval;
 use App\Models\Manifest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class FreightController extends Controller
@@ -140,4 +140,34 @@ class FreightController extends Controller
 
 
 
+    function makeFreightapproval(Request $request){
+        $total = $request->total;
+
+        // $arr = ['jpg', 'jpeg', 'gif', 'png'];
+        for($i = 0; $i < $total; $i++)
+        {
+            $freight = Freight::find($_POST['id_'.$i]);
+            if($freight->status <= 4) {
+                $message = $_POST['message_'.$i];
+                $file = $_FILES['file_'.$i];
+                $ext = last(explode('.',$file['name']));
+                $img_name = $freight->pro.'_'.time().rand(1111111,3333333).'.'.$ext;
+                move_uploaded_file($file['tmp_name'], 'assets/img/freight/'.$img_name);
+
+                $time = ($freight->status == 3 || $freight->status == 4) ? time() : $freight->ofd_time;
+                $info = [
+                    'image' => $img_name,
+                    'message' => $message,
+                    'time' => time(),
+                    'approved_by' => auth()->user()->id
+                ];
+                $freight->update([
+                    'approved' => 1,
+                    'approved_info' => json_encode($info),
+                    'ofd_time' => $time
+                ]);
+            }
+        }
+        return back()->with('success', 'Freights Approved Sucessfully');
+    }
 }

@@ -99,6 +99,10 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     Route::post('/createFreight', [\App\Http\Controllers\FreightController::class, 'createFreight'])->name('createFreight');
     Route::post('/assign_freight', [\App\Http\Controllers\FreightController::class, 'assignFreightToDriver'])->name('assign.freight');
     Route::post('/update_freight', [\App\Http\Controllers\FreightController::class, 'adminUpdateFreight'])->name('assign.freight.update');
+    Route::post('/approve_freight', [\App\Http\Controllers\FreightController::class, 'makeFreightapproval']);
+
+
+
 
 
     Route::get('/freight/flagged', function () {

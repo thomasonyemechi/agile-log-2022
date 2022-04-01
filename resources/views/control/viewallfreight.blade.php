@@ -149,9 +149,12 @@ Manage Freight
                             </thead>
                             <tbody>
                                 @foreach ($freights as $fre)
-                                    <tr class="single">
+                                    @php
+                                        $req_data = ['id' => $fre->id, 'pro' => $fre->pro, 'company' => $fre->org->name];
+                                    @endphp
+                                    <tr class="single {{($fre->approved == 0) ? 'text-danger' : ''}}"  style="border-color:{{($fre->approved == 0) ? 'brown' : ''}}; " >
                                         <td>
-                                            <input type="checkbox" data-id="{{$fre->id}}inp" class="ooooo" value="{{$fre->id}}">
+                                            <input type="checkbox" data-id="{{$fre->id}}inp" class="ooooo" value="{{$fre->id}}" daat='{{json_encode($req_data)}}' >
                                             <input type="hidden" id="{{$fre->id}}inp" value=0>
                                             {{$loop->iteration}}
                                         </td>
@@ -177,12 +180,13 @@ Manage Freight
                                     <td></td>
                                     <td><b>With Selected:</b></td>
                                     <td></td>
+
+                                    <td><button class="btn btn-sm btn-info float-right approve_freight">Approve</button></td>
                                     <td>
                                         <button class="btn btn-sm btn-info float-right assign">Assign</button>
                                     </td>
                                     <td><button class="btn ms-2 btn-sm btn-primary float-right update">Update</button></td>
 
-                                    <td></td>
 
                                     <td></td>
 
@@ -292,6 +296,32 @@ Manage Freight
     </div>
 
 
+
+    <div class="modal fade" id="approve_freight" tabindex="-1" role="dialog" aria-labelledby="addFreight" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered moda" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Arrpoved Selected Freight</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fe fe-x-circle"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/control/approve_freight" enctype="multipart/form-data">
+                        @csrf
+                        <div class="approve_body">
+
+                        </div>
+
+                        <button class="btn btn-primary float-right submit_approval">Approve Freights</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 
     <script>
@@ -303,6 +333,7 @@ Manage Freight
                 inp.val(new_val);
 
             })
+
 
             $('body').on('click', '.assign', function() {
                 trs = $('.single'); data = []; i = 0;
@@ -341,6 +372,73 @@ Manage Freight
                 $(modal).find('input[name="data"]').val(`${JSON.stringify(data)}`);
                 console.log(data);
             })
+
+            $('.approve_freight').on('click', function () {
+                trs = $('.single'); data = []; i = 0;
+                trs.map(tr => {
+                    check = trs[tr].children[0].children[1].value;
+                    if(check == 1) {
+                        f_id = trs[tr].children[0].children[0].value;
+                        info = JSON.parse(trs[tr].children[0].children[0].getAttribute('daat'))
+                        data.push(info)
+                        i++;
+                    }
+                });
+                // if(i == 0) { alert('Pls select freight to Approve'); return; }
+                console.log(data);
+
+                modal = $('#approve_freight');
+                modal.modal('show');
+                body = $('.approve_body')
+                body.html(''); i = 0
+                data.map((fr, index) => {
+                    console.log(fr);
+                    i++;
+                    body.append(`
+                        <div class="approve_single">
+                            <b>${fr.pro} (${fr.company})</b>
+                            <input type="file" name="file_${index}" accept="image/jpeg"  class="form-control approve_files">
+                            <input type="hidden" name="id_${index}" class="approve_id" value="${fr.id}">
+                            <textarea name="message_${index}" class="form-control mt-2 approve_message"  placeholder="Enter Freight Message"></textarea>
+                        </div>
+                        <hr>
+                    `)
+                })
+
+                body.append(`<input type="hidden" name="total" value="${i}">`)
+            })
+
+
+            // $('.submit_approval').on('click', function(e) {
+            //     e.preventDefault();
+            //     data = [];
+            //     freights = $('.approve_single')
+            //     freights.map(freight => {
+            //         freight = freights[freight]
+            //         files = freight.children[1].value
+            //         id = freight.children[2].value
+            //         message = freight.children[3].value
+            //         info = { id: id, message:message, file: files  }
+            //         data.push(info)
+            //     });
+
+            //     $.ajax({
+            //         method: 'post',
+            //         url: '/control/approve_freight',
+            //         headers: {
+            //             "X-CSRF-TOKEN": `{{csrf_token()}}`
+            //         },
+            //         data: data,
+            //         processData: false,
+            //         contentType: false,
+            //     }).done(function(res){
+            //         console.log(res);
+            //     }).fail(function(res) {
+            //         console.log(res);
+            //     })
+
+
+            // })
 
         })
     </script>

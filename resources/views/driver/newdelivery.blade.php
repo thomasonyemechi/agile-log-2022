@@ -33,7 +33,7 @@
         </div>
 
         @php
-            $freights = \App\Models\Freight::where(['driver_id' => auth()->user()->id, 'status' => 3 ])->orderBy('id', 'desc')->paginate(100);
+            $freights = \App\Models\Freight::where(['driver_id' => auth()->user()->id, 'status' => 3, 'approved' => 1 ])->orderBy('id', 'desc')->paginate(100);
         @endphp
         <div class="row">
             <div class="col-12">
@@ -120,5 +120,5 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
 
-    
+
 @endsection
