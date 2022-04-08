@@ -18,11 +18,21 @@ class FreightController extends Controller
             'action' => 'required'
         ]);
 
+        $img_name = 'no_img.png';
+
+        if($request->hasFile('u_file')) {
+            $file = $_FILES['u_file'];
+            $ext = last(explode('.',$file['name']));
+            $img_name = 'receipt_'.time().rand(1111111,3333333).'.'.$ext;
+            move_uploaded_file($file['tmp_name'], 'assets/img/freight/'.$img_name);
+        }
+
         foreach(json_decode($request->data) as $f_id) {
             $fre = Freight::find($f_id);
             $msg = [
                 'message' => $request->message,
                 'time' => time(),
+                'image' => $img_name
             ];
 
             if($fre->message == ''){
@@ -134,6 +144,9 @@ class FreightController extends Controller
             'status' => $status,
             'driver_id' => $driver_id,
             'ofd_time' => $ofd_time,
+            'manifest_number' => $request->manifest_number,
+            'city' => $request->city,
+            'location' => $request->location
         ]);
         return back()->with('success', 'Freight added successfully');
     }
@@ -143,12 +156,15 @@ class FreightController extends Controller
     function makeFreightapproval(Request $request){
         $total = $request->total;
 
+        // return $request;
+
         // $arr = ['jpg', 'jpeg', 'gif', 'png'];
         for($i = 0; $i < $total; $i++)
         {
             $freight = Freight::find($_POST['id_'.$i]);
             if($freight->status <= 4) {
                 $message = $_POST['message_'.$i];
+                $pallet = $_POST['pallet_'.$i];
                 $file = $_FILES['file_'.$i];
                 $ext = last(explode('.',$file['name']));
                 $img_name = $freight->pro.'_'.time().rand(1111111,3333333).'.'.$ext;
@@ -164,11 +180,16 @@ class FreightController extends Controller
                 ];
 
 
+
+
                 $freight->update([
                     'approved' => 1,
                     'approved_info' => json_encode($info),
-                    'ofd_time' => $time
+                    'ofd_time' => $time,
+                    'pallet_in' => $pallet
                 ]);
+
+
             }
         }
         return back()->with('success', 'Freights Approved Sucessfully');
