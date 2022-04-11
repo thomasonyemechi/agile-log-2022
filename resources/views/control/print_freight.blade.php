@@ -49,6 +49,7 @@ $freights = \App\Models\Freight::where(['driver_id' => $driver->id,])->whereBetw
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
+                                    <th scope="col" class="border-0">Manifest</th>
                                     <th scope="col" class="border-0">Pro</th>
                                     <th scope="col" class="border-0">Consignee</th>
                                     <th scope="col" class="border-0">Destination</th>
@@ -73,6 +74,9 @@ $freights = \App\Models\Freight::where(['driver_id' => $driver->id,])->whereBetw
                                     <tr class="single">
                                         <td>
                                             {{$loop->iteration}}
+                                        </td>
+                                        <td class="align-middle">
+                                            {{$fre->manifest_number}}
                                         </td>
                                         <td class="align-middle">
                                             <a href="#" class="freightInfo align-middle" style="font-weight: bolder"
