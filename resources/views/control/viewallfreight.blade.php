@@ -137,6 +137,7 @@ Manage Freight
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
+                                    <th scope="col" class="border-0">Manifest</th>
                                     <th scope="col" class="border-0">Org</th>
                                     <th scope="col" class="border-0">OFD Date</th>
                                     <th scope="col" class="border-1">Driver</th>
@@ -160,6 +161,9 @@ Manage Freight
                                             <input type="hidden" id="{{$fre->id}}inp" value=0>
                                             {{$loop->iteration}}
                                         </td>
+                                        <td class="align-middle">
+                                            {{$fre->manifest_number}}
+                                        </td>
                                         <td class="align-middle" style="font-weight: bolder">
                                              {!!'<a class="text-bold" href="/control/o/freight/'.$fre->org->id.'/'.date('Y-m-j').' ">'.$fre->org->name.' </a>' !!}  </td>
                                         <td class="align-middle">{{ ($fre->ofd_time > 0) ? date('j M, Y', $fre->ofd_time): '' }} </td>
@@ -179,6 +183,7 @@ Manage Freight
                                     </tr>
                                 @endforeach
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td><b>With Selected:</b></td>
                                     <td></td>

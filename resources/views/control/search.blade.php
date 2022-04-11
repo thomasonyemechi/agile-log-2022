@@ -40,6 +40,7 @@
             ->orWhere('byd_split', 'like', "%$q%")
             ->orWhere('spec_ins', 'like', "%$q%")
             ->orWhere('pallet', 'like', "%$q%")
+            ->orWhere('manifest_number', 'like', "%$q%")
             ->paginate(200);
         @endphp
 
@@ -54,6 +55,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" class="border-0">#</th>
+                                    <th scope="col" class="border-0">Manifest</th>
                                     <th scope="col" class="border-0">Pro/status</th>
                                     <th scope="col" class="border-0">Consignee</th>
                                     <th scope="col" class="border-0">Destination</th>
@@ -74,6 +76,9 @@
                                             {{$loop->iteration}}
                                         </td>
                                         <td class="align-middle">
+                                            {{$fre->manifest_number}}
+                                        </td>
+                                        <td class="align-middle">
                                             <a href="#" class="freightInfo align-middle" style="font-weight: bolder">{{$fre->pro }} {!! deliveryProStatus($fre->status) !!}</a>
                                         </td>
                                         <td class="align-middle"> {{$fre->consignee}} </td>
@@ -83,7 +88,7 @@
                                         <td class="align-middle">{{ $fre->byd_split }}</td>
                                     </tr>
                                 @endforeach
-                                <tr>
+                                {{-- <tr>
                                     <td colspan="2"><b>With Selected:</b></td>
                                     <td colspan="2">
                                         <div class="d-flex justify-content-end">
@@ -91,7 +96,7 @@
                                         </div>
                                     </td>
                                     <td colspan="3"></td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                     </div>
                     <div class="d-flex mt-3 justify-content-center">
