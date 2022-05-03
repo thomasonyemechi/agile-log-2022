@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Docker
+class Addoc
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Docker
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role == 3){
+        if(auth()->user()->role == 3 OR auth()->user()->level == 5){
             return $next($request);
         }else {
             return redirect('/control')->with('error', 'Unauthorized Page : you need admin permission to access page');

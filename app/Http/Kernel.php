@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'driver' => \App\Http\Middleware\Driver::class,
         'docker' => \App\Http\Middleware\Docker::class,
+        'addoc' => \App\Http\Middleware\Addoc::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'active' => \App\Http\Middleware\Active::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

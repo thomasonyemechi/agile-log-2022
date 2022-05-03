@@ -51,43 +51,80 @@ Route::group(['prefix'=>'driver', 'as'=>'driver.', 'middleware' => ['auth', 'dri
 });
 
 
-Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'active', 'admin'] ], function (){
+Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'active', 'addoc'] ], function (){
 
-    Route::get('/', function () {
-        return view('control.index');
-    })->name('dashboard');
-    Route::get('/addnewstaff', function () {
-        return view('control.addstaff');
+    Route::group(['middleware' => ['admin'] ], function (){
+
+        Route::get('/', function () {
+            return view('control.index');
+        })->name('dashboard');
+        Route::get('/addnewstaff', function () {
+            return view('control.addstaff');
+        });
+
+        Route::get('/all/staff', function () {
+            return view('control.allstaff');
+        });
+
+        //staff routes
+        Route::post('/addStaff', [\App\Http\Controllers\StaffController::class, 'addStaff'])->name('addStaff');
+        Route::post('/userStatus', [\App\Http\Controllers\StaffController::class, 'userStatus'])->name('userStatus');
+
+        ///organization management
+        Route::post('/createOrganization', [\App\Http\Controllers\OrganizationController::class, 'createOrganization'])->name('createOrganization');
+        Route::post('/editOrganizationInfo', [\App\Http\Controllers\OrganizationController::class, 'editOrganizationInfo'])->name('editOrganizationInfo');
+        Route::get('/organization/new', function () {
+            return view('control.addorganization');
+        });
+
+        Route::get('/organization/{slug}', function ($slug) {
+            $org = \App\Models\Organization::where('slug', $slug)->first(); if(!$org){ abort(404); }
+            return view('control.organization', compact('org'));
+        });
+
+        Route::get('/organizations/all', function () {
+            return view('control.allorg');
+        });
+
+
+        Route::get('/freight/flagged', function () {
+            return view('control.flagged');
+        });
+
+
+        Route::get('/freight/delivered', function () {
+            return view('control.deliveerd');
+        });
+
+
+        Route::get('/freight/ofd', function () {
+            return view('control.ofd');
+        });
+
+
+        /////delivery
+        Route::get('/history/delivery', function () {
+            return view('control.deliveryhistory');
+        });
+
+
+        //driver management
+        Route::get('/driver/add', function () {
+            return view('control.adddriver');
+        });
+
+        Route::get('/driver/all', function () {
+            return view('control.alldriver');
+        });
+
+        Route::get('/driver/profile/{id}', function ($id) {
+            $driver = User::find($id); if(!$driver) { abort(404); }
+            return view('control.driverprofile', compact('driver'));
+        });
+
+
     });
-
-    Route::get('/all/staff', function () {
-        return view('control.allstaff');
-    });
-
-
-
-    //staff routes
-    Route::post('/addStaff', [\App\Http\Controllers\StaffController::class, 'addStaff'])->name('addStaff');
-    Route::post('/userStatus', [\App\Http\Controllers\StaffController::class, 'userStatus'])->name('userStatus');
-
-    ///organization management
-    Route::post('/createOrganization', [\App\Http\Controllers\OrganizationController::class, 'createOrganization'])->name('createOrganization');
-    Route::post('/editOrganizationInfo', [\App\Http\Controllers\OrganizationController::class, 'editOrganizationInfo'])->name('editOrganizationInfo');
-    Route::get('/organization/new', function () {
-        return view('control.addorganization');
-    });
-
-    Route::get('/organization/{slug}', function ($slug) {
-        $org = \App\Models\Organization::where('slug', $slug)->first(); if(!$org){ abort(404); }
-        return view('control.organization', compact('org'));
-    });
-
-    Route::get('/organizations/all', function () {
-        return view('control.allorg');
-    });
-
-
-
+    
     // Freight management
     Route::post('/createMainfest', [\App\Http\Controllers\FreightController::class, 'createMainfest'])->name('createMainfest');
     Route::post('/editManifest', [\App\Http\Controllers\FreightController::class, 'editManifest'])->name('editManifest');
@@ -101,28 +138,6 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     Route::post('/update_freight', [\App\Http\Controllers\FreightController::class, 'adminUpdateFreight'])->name('assign.freight.update');
     Route::post('/approve_freight', [\App\Http\Controllers\FreightController::class, 'makeFreightapproval']);
 
-
-
-
-
-    Route::get('/freight/flagged', function () {
-        return view('control.flagged');
-    });
-
-
-    Route::get('/freight/delivered', function () {
-        return view('control.deliveerd');
-    });
-
-
-    Route::get('/freight/ofd', function () {
-        return view('control.ofd');
-    });
-
-
-
-
-
     Route::get('d/freight/{driver_id}/{date?}', function ($driver_id, $date) {
         $driver = User::find($driver_id);
         return view('control.print_freight', compact('driver', 'date'));
@@ -133,38 +148,6 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
         $org = Organization::find($org_id);
         return view('control.print_invoice', compact('org', 'date'));
     });
-
-
-
-
-
-
-
-
-
-    /////delivery
-    Route::get('/history/delivery', function () {
-        return view('control.deliveryhistory');
-    });
-
-
-    //driver management
-    Route::get('/driver/add', function () {
-        return view('control.adddriver');
-    });
-
-    Route::get('/driver/all', function () {
-        return view('control.alldriver');
-    });
-
-    Route::get('/driver/profile/{id}', function ($id) {
-        $driver = User::find($id); if(!$driver) { abort(404); }
-        return view('control.driverprofile', compact('driver'));
-    });
-
-
-
-
     ///search routes
 
     Route::post('/collectsearch', function (Request $request) {
@@ -175,13 +158,6 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
     Route::get('/search/{q}', function ($q) {
         return view('control.search', compact('q'));
     });
-
-
-
-
-
-
-
 
 
 });
