@@ -142,11 +142,11 @@ Manage Freight
                                     <th scope="col" class="border-0">OFD Date</th>
                                     <th scope="col" class="border-1">Driver</th>
                                     <th scope="col" class="border-0">Pro/status</th>
+                                    <th scope="col" class="border-0">Location</th>
                                     <th scope="col" class="border-0">Consignee</th>
                                     <th scope="col" class="border-0">Destination</th>
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
-                                    <th scope="col" class="border-0">Split</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -174,11 +174,11 @@ Manage Freight
                                             <a href="#" class="freightInfo align-middle"
                                             title="click for more">{{$fre->pro }} {!! deliveryProStatus($fre->status) !!} </a>
                                         </td>
+                                        <td class="align-middle"> {{$fre->location}} </td>
                                         <td class="align-middle"> {{$fre->consignee}} </td>
                                         <td class="align-middle">{{ $fre->destination }}</td>
                                         <td class="align-middle">{{ $fre->spec_ins }}</td>
                                         <td class="align-middle">{{ $fre->pallet }} | {{ $fre->weight }} LBS</td>
-                                        <td class="align-middle">{{ $fre->byd_split }}</td>
                                         <td class="align-middle"><button class="btn btn-sm btn-info view_more" data-data='{{json_encode($fre)}}'>More</button></td>
                                     </tr>
                                 @endforeach
