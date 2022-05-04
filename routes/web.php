@@ -51,13 +51,14 @@ Route::group(['prefix'=>'driver', 'as'=>'driver.', 'middleware' => ['auth', 'dri
 });
 
 
-Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'active', 'addoc'] ], function (){
+Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'addoc'] ], function (){
 
     Route::group(['middleware' => ['admin'] ], function (){
 
         Route::get('/', function () {
             return view('control.index');
         })->name('dashboard');
+
         Route::get('/addnewstaff', function () {
             return view('control.addstaff');
         });
@@ -85,13 +86,6 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
         Route::get('/organizations/all', function () {
             return view('control.allorg');
         });
-
-
-
-
-
-
-
 
         //driver management
         Route::get('/driver/add', function () {

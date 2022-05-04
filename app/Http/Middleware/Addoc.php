@@ -16,10 +16,10 @@ class Addoc
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role == 3 OR auth()->user()->level == 5){
+        if(auth()->user()->role == 3 OR auth()->user()->role == 5){
             return $next($request);
         }else {
-            return redirect('/control')->with('error', 'Unauthorized Page : you need admin permission to access page');
+            return redirect('/login')->with('error', 'Unauthorized Page : you need admin permission to access page');
         }
     }
 }

@@ -25,7 +25,7 @@ class Admin
             }else if(auth()->user()->role == 1){
                 return redirect('/driver/new/delivery')->with('error', 'Unauthorized Page');
             }
-            return redirect('/signin')->with('error', 'Unauthorized Page : you need admin permission to access page');
+            return redirect('/login')->with('error', 'Unauthorized Page : you need admin permission to access page');
         }
     }
 }

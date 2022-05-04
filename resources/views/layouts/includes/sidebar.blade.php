@@ -8,7 +8,7 @@
             </a>
             <!-- Navbar nav -->
             <ul class="navbar-nav flex-column" id="sideNavbar">
-                @if(auth()->user()->role == 5) {
+                @if(auth()->user()->role == 5)
                     <li class="nav-item">
                         <a class="nav-link" href="/control/">
                             <i class="nav-icon fe fe-home me-2"></i> Dashboard
@@ -78,7 +78,7 @@
                 </li>
 
 
-                @if(auth()->user()->role == 5) {
+                @if(auth()->user()->role == 5)
                     <li class="nav-item">
                         <a class="nav-link" href="#!" data-bs-toggle="collapse" data-bs-target="#driverNav"
                             aria-expanded="false" aria-controls="driverNav">
