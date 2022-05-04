@@ -87,25 +87,10 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
         });
 
 
-        Route::get('/freight/flagged', function () {
-            return view('control.flagged');
-        });
 
 
-        Route::get('/freight/delivered', function () {
-            return view('control.deliveerd');
-        });
 
 
-        Route::get('/freight/ofd', function () {
-            return view('control.ofd');
-        });
-
-
-        /////delivery
-        Route::get('/history/delivery', function () {
-            return view('control.deliveryhistory');
-        });
 
 
         //driver management
@@ -124,7 +109,7 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
 
 
     });
-    
+
     // Freight management
     Route::post('/createMainfest', [\App\Http\Controllers\FreightController::class, 'createMainfest'])->name('createMainfest');
     Route::post('/editManifest', [\App\Http\Controllers\FreightController::class, 'editManifest'])->name('editManifest');
@@ -159,5 +144,19 @@ Route::group(['prefix'=>'control', 'as'=>'control.', 'middleware' => ['auth', 'a
         return view('control.search', compact('q'));
     });
 
+    Route::get('/freight/delivered', function () {
+        return view('control.deliveerd');
+    });
+
+    Route::get('/freight/ofd', function () {
+        return view('control.ofd');
+    });
+
+    Route::get('/history/delivery', function () {
+        return view('control.deliveryhistory');
+    });
+    Route::get('/freight/flagged', function () {
+        return view('control.flagged');
+    });
 
 });
