@@ -13,6 +13,8 @@ $first_second = strtotime(date('Y-m-01'));
 $last_second  = strtotime(date('Y-m-t'))+ 86400-1 ;
 
 $freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('ofd_time', [$first_second, $last_second])->orderBy('id', 'desc')->paginate(100);
+
+$role = auth()->user()->role;
 @endphp
 
 
@@ -58,7 +60,7 @@ $freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('o
                                     <th scope="col" class="border-0">Spec Ins</th>
                                     <th scope="col" class="border-0">Pallet</th>
                                     <th scope="col" class="border-0">Wgt</th>
-                                    <th scope="col" class="border-0">Split</th>
+                                    @if($role > 3 )<th scope="col" class="border-0">Split</th>@endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,7 +91,7 @@ $freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('o
                                         <td class="align-middle">{{ $fre->spec_ins }}</td>
                                         <td class="align-middle">{{ $fre->pallet }}</td>
                                         <td class="align-middle">{{ $fre->weight }}</td>
-                                        <td class="align-middle">{{ $fre->byd_split }}</td>
+                                        @if($role > 3 )<td class="align-middle">{{ $fre->byd_split }}</td>@endif
                                     </tr>
                                 @endforeach
                                 <tr>
@@ -98,9 +100,10 @@ $freights = \App\Models\Freight::where(['org_id' => $org->id,])->whereBetween('o
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                     <td>{{number_format($t_pal)}} </td>
                                     <th >{{number_format($t_wgt)}}</th>
-                                    <th>{{number_format($t_spil)}}</th>
+                                    @if($role > 3 )<th>{{number_format($t_spil)}}</th>@endif
                                 </tr>
                             </tbody>
                         </table>
