@@ -153,7 +153,7 @@ Manage Freight
                             <tbody>
                                 @foreach ($freights as $fre)
                                     @php
-                                        $req_data = ['id' => $fre->id, 'pro' => $fre->pro, 'company' => $fre->org->name, 'pallet' => $fre->pallet];
+                                        $req_data = ['id' => $fre->id, 'pro' => $fre->pro, 'company' => $fre->org->name, 'pallet' => $fre->pallet, 'location' => $fre->location ];
                                     @endphp
                                     <tr class="single {{($fre->approved == 0) ? 'text-danger' : ''}}"  style="border-color:{{($fre->approved == 0) ? 'brown' : ''}}; " >
                                         <td>

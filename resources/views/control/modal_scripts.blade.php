@@ -254,6 +254,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="id_${index}" class="approve_id" value="${fr.id}">
+                        <input type="text" placeholder="Location" name="location_${index}" class="form-control mt-1" value="${fr.location}">
                         <textarea name="message_${index}" class="form-control mt-2 approve_message"  placeholder="Enter Freight Message"></textarea>
                     </div>
                     <hr>

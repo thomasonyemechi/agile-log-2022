@@ -165,6 +165,7 @@ class FreightController extends Controller
             if($freight->status <= 4) {
                 $message = $_POST['message_'.$i];
                 $pallet = $_POST['pallet_'.$i];
+                $location = $_POST['location_'.$i];
                 $file = $_FILES['file_'.$i];
                 $ext = last(explode('.',$file['name']));
                 $img_name = $freight->pro.'_'.time().rand(1111111,3333333).'.'.$ext;
@@ -186,7 +187,8 @@ class FreightController extends Controller
                     'approved' => 1,
                     'approved_info' => json_encode($info),
                     'ofd_time' => $time,
-                    'pallet_in' => $pallet
+                    'pallet_in' => $pallet,
+                    'location' => $location
                 ]);
 
 
